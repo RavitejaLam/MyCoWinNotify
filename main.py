@@ -41,4 +41,6 @@ for i in range(30):
     get_sessions(date)
 
 if len(valid_sessions):
-    telegram_bot.send_message(str(valid_sessions), str(constant.CHAT_ID), str(constant.BOT_TOKEN))
+    chat_ids = list(constant.CHAT_ID.strip().split(','))
+    for chat_id in chat_ids:
+        telegram_bot.send_message(str(valid_sessions), str(chat_id), str(constant.BOT_TOKEN))
