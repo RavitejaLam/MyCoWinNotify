@@ -7,6 +7,8 @@ import telegram_bot
 import constant
 import ua
 
+logging.basicConfig(level=logging.DEBUG)
+
 
 def jprint(obj):
     text = json.dumps(obj, sort_keys=True, indent=4)
@@ -15,25 +17,27 @@ def jprint(obj):
 
 def get_sessions(date):
     logging.info("Running for date : " + date)
+    user_agent = ua.get_random_user_agent("Chrome")
     headers = {
-        'User-Agent': ua.get_random_user_agent("Chrome"),
+        'User-Agent': user_agent,
         'From': 'ryuk@cowin.com'
     }
-    response = requests.get(
-        "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=8&date=" + date,
-        headers=headers)
+    cowin_api = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=8&date=" + date
+    response = requests.get(cowin_api, headers=headers)
 
     if response.status_code != 200:
-        logging.error("Failed to get CoWin API")
+        logging.error("Failed to get CoWin API with status" + str(response.status_code))
+        logging.debug("response json: " + response.json())
         exit(1)
 
     centers = response.json()['centers']
     for center in centers:
         for session in center['sessions']:
-            if session['min_age_limit'] < 25:
+            if session['min_age_limit'] < req_age:
                 valid_sessions.append(session)
 
 
+req_age = 25
 valid_sessions = []
 
 for i in range(30):
@@ -44,3 +48,6 @@ if len(valid_sessions):
     chat_ids = list(constant.CHAT_ID.strip().split(','))
     for chat_id in chat_ids:
         telegram_bot.send_message(str(valid_sessions), str(chat_id), str(constant.BOT_TOKEN))
+else:
+    logging.error("Currently no centers for age < " + str(req_age) + " in visakhapatnam")
+    exit(0)
