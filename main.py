@@ -17,7 +17,8 @@ def jprint(obj):
 
 def get_sessions(date):
     logging.info("Running for date : " + date)
-    user_agent = ua.get_random_user_agent("Chrome")
+    # user_agent = ua.get_random_user_agent("Chrome")
+    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'
     headers = {
         'User-Agent': user_agent,
         'From': 'ryuk@cowin.com'
@@ -49,5 +50,5 @@ if len(valid_sessions):
     for chat_id in chat_ids:
         telegram_bot.send_message(str(valid_sessions), str(chat_id), str(constant.BOT_TOKEN))
 else:
-    logging.error("Currently no centers for age < " + str(req_age) + " in visakhapatnam")
+    logging.info("Currently no centers for age < " + str(req_age) + " in visakhapatnam")
     exit(0)
