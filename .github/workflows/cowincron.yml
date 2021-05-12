@@ -1,4 +1,7 @@
+name: Run My CoWin Notify
+
 on:
+  push:
   schedule:
     - cron:  '*/5 * * * *'
 jobs:
