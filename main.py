@@ -17,8 +17,8 @@ def jprint(obj):
 
 def get_sessions(date):
     logging.info("Running for date : " + date)
-    # user_agent = ua.get_random_user_agent("Chrome")
-    user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'
+    user_agent = ua.get_random_user_agent("Chrome")
+    # user_agent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'
     headers = {
         'User-Agent': user_agent,
         'From': 'ryuk@cowin.com'
