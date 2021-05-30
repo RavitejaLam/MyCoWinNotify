@@ -4,8 +4,6 @@ import random
 import requests as req
 from bs4 import BeautifulSoup
 
-logging.basicConfig(level=logging.DEBUG)
-
 
 def get_random_user_agent(browser):
     url = 'http://www.useragentstring.com/pages/useragentstring.php?name=' + browser
